@@ -13,8 +13,8 @@
 - Plan written: [done]
 - Build 1 (small) status: ✅
 - Admin account seeded: ✅ with email david@austpayroll.com.au
-- Build 2 (all) status: [pending]
-- Resend domain verified: [pending]
+- Build 2 (all) status: ⚠️ done except the Resend confirmation email (deferred — no domain yet)
+- Resend domain verified: [pending] (needs a real domain first)
 
 # How to use this catalog
 
