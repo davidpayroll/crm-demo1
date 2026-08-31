@@ -2,6 +2,7 @@ import Link from "next/link";
 import { logout } from "./logout/actions";
 
 const NAV = [
+  { href: "/admin/dashboard", label: "Dashboard" },
   { href: "/admin", label: "Leads" },
   { href: "/admin/people", label: "People" },
   { href: "/admin/orders", label: "Orders" },
