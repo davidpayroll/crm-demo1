@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Architecture · Australian Payroll Advisory (APA)</title>
+<style>
+  :root {
+    --navy: #485F88;
+    --teal: #6EC9C0;
+    --bluegrey: #A0ADC0;
+    --ink: #333132;
+    --darknavy: #29394D;
+    --deepteal: #467D79;
+    --slate: #808897;
+    --bg: #F7F8FA;
+    --card: #FFFFFF;
+    --border: #E1E5EC;
+    --code-bg: #F1F3F7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    margin: 0;
+    padding: 56px 24px 96px;
+    line-height: 1.6;
+  }
+  .page { max-width: 880px; margin: 0 auto; }
+  .masthead {
+    border-bottom: 3px solid var(--navy);
+    padding-bottom: 28px;
+    margin-bottom: 40px;
+  }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--deepteal);
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--darknavy);
+    margin: 0 0 8px;
+    letter-spacing: -0.01em;
+  }
+  .subtitle { font-size: 15px; color: var(--slate); }
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--darknavy);
+    margin: 44px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 24px 0 8px;
+  }
+  p { margin: 0 0 14px; }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--navy);
+    border-radius: 6px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  code {
+    background: var(--code-bg);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: "SF Mono", Consolas, "Courier New", monospace;
+    font-size: 0.9em;
+    color: var(--darknavy);
+  }
+  .layer-list { list-style: none; padding: 0; margin: 0 0 8px; }
+  .layer-list li {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--teal);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    font-size: 14.5px;
+  }
+  .layer-list li strong { color: var(--darknavy); }
+  .env-table, .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 24px;
+    font-size: 14px;
+  }
+  .env-table th, .data-table th {
+    text-align: left;
+    background: var(--navy);
+    color: #fff;
+    padding: 9px 12px;
+    font-weight: 600;
+    font-size: 13px;
+  }
+  .env-table td, .data-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .env-table tr:last-child td, .data-table tr:last-child td { border-bottom: none; }
+  .data-table td:first-child, .env-table td:first-child {
+    font-family: "SF Mono", Consolas, "Courier New", monospace;
+    font-size: 13px;
+    color: var(--darknavy);
+    white-space: nowrap;
+  }
+  .table-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--navy);
+    margin: 32px 0 4px;
+  }
+  .table-note {
+    font-size: 13.5px;
+    color: var(--slate);
+    margin-bottom: 8px;
+  }
+  .flow-steps {
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+    margin: 16px 0;
+  }
+  .flow-steps li {
+    counter-increment: step;
+    position: relative;
+    padding: 10px 18px 10px 46px;
+    margin-bottom: 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 14.5px;
+  }
+  .flow-steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 12px;
+    top: 8px;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    background: var(--navy);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .rel-list { list-style: disc; padding-left: 22px; font-size: 14.5px; }
+  .rel-list li { margin-bottom: 8px; }
+  .footer-note {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--slate);
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="masthead">
+    <div class="eyebrow">Architecture</div>
+    <h1>Australian Payroll Advisory (APA)</h1>
+    <div class="subtitle">Technical companion to the product plan</div>
+  </div>
+
+  <h2>1. Overview</h2>
+  <div class="card">
+    <p>This is a Next.js (App Router) app deployed on Vercel, backed by a Supabase
+    Postgres database, with Resend for email. It has two surfaces: a public marketing
+    site that captures leads, and an <code>/admin</code> CRM. <code>/admin</code> starts
+    open and gets locked down with Supabase Auth later in the build.</p>
+  </div>
+
+  <h2>2. How the pieces fit</h2>
+  <ul class="layer-list">
+    <li><strong>Next.js (App Router)</strong> — renders the public site and <code>/admin</code>; server code handles form submissions and all database reads/writes.</li>
+    <li><strong>Vercel</strong> — hosts and deploys the app; environment variables hold every secret; a push deploys.</li>
+    <li><strong>Supabase (Postgres)</strong> — the database. Accessed server-side only, using the service key. Secrets never reach the browser.</li>
+    <li><strong>Resend</strong> — sends the confirmation email when a lead comes in (wired in Build 2).</li>
+  </ul>
+
+  <h3>Environment variables</h3>
+  <table class="env-table">
+    <tr><th>Variable</th><th>What it's for</th></tr>
+    <tr><td>NEXT_PUBLIC_SUPABASE_URL</td><td>The Supabase project's API endpoint.</td></tr>
+    <tr><td>NEXT_PUBLIC_SUPABASE_ANON_KEY</td><td>Public client key — safe to expose in the browser, limited by row-level security.</td></tr>
+    <tr><td>SUPABASE_SERVICE_ROLE_KEY</td><td>Server-only key with full database access — used for all reads/writes; never sent to the client.</td></tr>
+    <tr><td>RESEND_API_KEY</td><td>Authenticates outbound email sending through Resend.</td></tr>
+    <tr><td>NEXT_PUBLIC_SITE_URL</td><td>The live domain — used for email links and redirects.</td></tr>
+  </table>
+
+  <h2>3. The lead flow</h2>
+  <ol class="flow-steps">
+    <li>Visitor submits the contact form on the public site.</li>
+    <li>Server upserts a People row by email — never duplicates a person.</li>
+    <li>Server creates a linked Contacts row in status <code>new_lead</code>.</li>
+    <li>(Build 2) Resend sends a confirmation email to the visitor.</li>
+    <li>Operator sees and works the lead in <code>/admin</code>.</li>
+    <li>Each status change on the Contacts row writes an activity_log row.</li>
+  </ol>
+
+  <h2>4. Data model</h2>
+
+  <div class="table-title">People</div>
+  <div class="table-note">One row per person, deduplicated by email.</div>
+  <table class="data-table">
+    <tr><th>Field</th><th>Type</th><th>Notes</th></tr>
+    <tr><td>id</td><td>uuid</td><td>Primary key</td></tr>
+    <tr><td>email</td><td>text</td><td>Unique — the dedupe key</td></tr>
+    <tr><td>name</td><td>text</td><td></td></tr>
+    <tr><td>phone</td><td>text</td><td></td></tr>
+    <tr><td>company</td><td>text</td><td></td></tr>
+    <tr><td>role</td><td>text</td><td></td></tr>
+    <tr><td>source_site</td><td>text</td><td>Which site captured them</td></tr>
+    <tr><td>ok_to_contact</td><td>boolean</td><td>True means they're on the newsletter</td></tr>
+    <tr><td>attributes</td><td>jsonb</td><td>
+      APA's custom attributes live here:
+      <br>&nbsp;&nbsp;• <code>industrial_instrument_in_use</code> — short text (e.g. "Clerks Award", "Retail EA")
+      <br>&nbsp;&nbsp;• <code>business_size</code> — pick-from-list ("1-20", "21-100", "101-500", "500+")
+      <br>&nbsp;&nbsp;• <code>payroll_software_in_use</code> — short text (e.g. "Xero", "MYOB", "ADP")
+    </td></tr>
+    <tr><td>created_at</td><td>timestamptz</td><td></td></tr>
+    <tr><td>updated_at</td><td>timestamptz</td><td></td></tr>
+  </table>
+
+  <div class="table-title">Contacts</div>
+  <div class="table-note">Inquiry pipeline; each row links to a person.</div>
+  <table class="data-table">
+    <tr><th>Field</th><th>Type</th><th>Notes</th></tr>
+    <tr><td>id</td><td>uuid</td><td>Primary key</td></tr>
+    <tr><td>person_id</td><td>uuid</td><td>References People(id)</td></tr>
+    <tr><td>type</td><td>text</td><td>
+      Constrained to APA's inquiry types:
+      <code>payroll_remediations</code>, <code>general_question</code>,
+      <code>compliance_review_audit</code>, <code>system_setup_implementation</code>
+    </td></tr>
+    <tr><td>subject</td><td>text</td><td></td></tr>
+    <tr><td>message</td><td>text</td><td></td></tr>
+    <tr><td>source</td><td>text</td><td></td></tr>
+    <tr><td>status</td><td>text</td><td>new_lead, contacted, discovery_call, proposal, won, lost</td></tr>
+    <tr><td>metadata</td><td>jsonb</td><td></td></tr>
+    <tr><td>created_at</td><td>timestamptz</td><td></td></tr>
+  </table>
+
+  <div class="table-title">activity_log</div>
+  <div class="table-note">One row per Contacts status change.</div>
+  <table class="data-table">
+    <tr><th>Field</th><th>Type</th><th>Notes</th></tr>
+    <tr><td>id</td><td>uuid</td><td>Primary key</td></tr>
+    <tr><td>contact_id</td><td>uuid</td><td>References Contacts(id)</td></tr>
+    <tr><td>person_id</td><td>uuid</td><td>References People(id)</td></tr>
+    <tr><td>from_status</td><td>text</td><td></td></tr>
+    <tr><td>to_status</td><td>text</td><td></td></tr>
+    <tr><td>actor</td><td>text</td><td>Who made the change</td></tr>
+    <tr><td>note</td><td>text</td><td></td></tr>
+    <tr><td>created_at</td><td>timestamptz</td><td></td></tr>
+  </table>
+
+  <div class="table-title">Orders</div>
+  <div class="table-note">What people bought.</div>
+  <table class="data-table">
+    <tr><th>Field</th><th>Type</th><th>Notes</th></tr>
+    <tr><td>id</td><td>uuid</td><td>Primary key</td></tr>
+    <tr><td>person_id</td><td>uuid</td><td>References People(id)</td></tr>
+    <tr><td>product_name</td><td>text</td><td></td></tr>
+    <tr><td>amount_cents</td><td>integer</td><td></td></tr>
+    <tr><td>currency</td><td>text</td><td></td></tr>
+    <tr><td>status</td><td>text</td><td>pending, paid, refunded, cancelled</td></tr>
+    <tr><td>created_at</td><td>timestamptz</td><td></td></tr>
+  </table>
+
+  <div class="table-title">Newsletter</div>
+  <div class="table-note">Not a table. Tracked by <code>People.ok_to_contact = true</code>.</div>
+
+  <h2>5. Relationships</h2>
+  <ul class="rel-list">
+    <li>One Person has many Contacts.</li>
+    <li>One Contacts row has many activity_log rows.</li>
+    <li>One Person has many Orders.</li>
+  </ul>
+
+  <div class="footer-note">Infinite Leverage · Architecture reference for Australian Payroll Advisory (APA)</div>
+
+</div>
+</body>
+</html>
