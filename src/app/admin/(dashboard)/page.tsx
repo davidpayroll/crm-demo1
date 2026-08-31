@@ -1,4 +1,8 @@
+import Link from "next/link";
 import { createAdminClient } from "@/lib/supabase/admin-client";
+import { updateContactStatus } from "./actions";
+import { CONTACT_STATUSES } from "./constants";
+import { StatusSelect } from "@/components/admin/StatusSelect";
 
 export const dynamic = "force-dynamic";
 
@@ -9,17 +13,9 @@ const TYPE_LABELS: Record<string, string> = {
   system_setup_implementation: "System Setup/Implementation",
 };
 
-const STATUS_LABELS: Record<string, string> = {
-  new_lead: "New Lead",
-  contacted: "Contacted",
-  discovery_call: "Discovery Call",
-  proposal: "Proposal",
-  won: "Won",
-  lost: "Lost",
-};
-
 type Lead = {
   id: string;
+  person_id: string;
   type: string;
   subject: string | null;
   message: string | null;
@@ -40,7 +36,7 @@ export default async function AdminLeadsPage() {
   const { data, error } = await supabase
     .from("contacts")
     .select(
-      "id, type, subject, message, status, created_at, people:person_id ( name, email, phone, company, attributes )"
+      "id, person_id, type, subject, message, status, created_at, people:person_id ( name, email, phone, company, attributes )"
     )
     .order("created_at", { ascending: false });
 
@@ -69,6 +65,12 @@ export default async function AdminLeadsPage() {
       <div className="space-y-4">
         {leads.map((lead) => {
           const attrs = lead.people?.attributes ?? {};
+          const boundUpdate = updateContactStatus.bind(
+            null,
+            lead.id,
+            lead.person_id,
+            lead.status
+          );
           return (
             <div
               key={lead.id}
@@ -77,7 +79,12 @@ export default async function AdminLeadsPage() {
               <div className="flex items-start justify-between gap-4 flex-wrap">
                 <div>
                   <p className="font-bold text-[#29394D]">
-                    {lead.people?.name || "(no name)"}{" "}
+                    <Link
+                      href={`/admin/people/${lead.person_id}`}
+                      className="hover:underline"
+                    >
+                      {lead.people?.name || "(no name)"}
+                    </Link>{" "}
                     <span className="font-normal text-[#808897]">
                       &lt;{lead.people?.email}&gt;
                     </span>
@@ -87,9 +94,11 @@ export default async function AdminLeadsPage() {
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-xs font-semibold uppercase tracking-wide bg-[#F1F3F7] text-[#29394D] px-2.5 py-1 rounded">
-                    {STATUS_LABELS[lead.status] ?? lead.status}
-                  </span>
+                  <StatusSelect
+                    action={boundUpdate}
+                    statuses={CONTACT_STATUSES}
+                    currentStatus={lead.status}
+                  />
                   <span className="text-xs text-[#808897]">
                     {new Date(lead.created_at).toLocaleString("en-AU")}
                   </span>

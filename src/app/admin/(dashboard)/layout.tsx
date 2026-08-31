@@ -1,4 +1,12 @@
+import Link from "next/link";
 import { logout } from "./logout/actions";
+
+const NAV = [
+  { href: "/admin", label: "Leads" },
+  { href: "/admin/people", label: "People" },
+  { href: "/admin/orders", label: "Orders" },
+  { href: "/admin/newsletter", label: "Newsletter" },
+];
 
 export default function AdminLayout({
   children,
@@ -26,6 +34,17 @@ export default function AdminLayout({
             </button>
           </form>
         </div>
+        <nav className="max-w-5xl mx-auto px-6 flex gap-6 border-t border-[#E1E5EC]">
+          {NAV.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="text-sm font-medium text-[#485F88] py-3 border-b-2 border-transparent hover:border-[#485F88]"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
       </header>
       <main className="max-w-5xl mx-auto px-6 py-8">{children}</main>
     </div>
