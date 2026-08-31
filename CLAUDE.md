@@ -1,18 +1,18 @@
 # Project Catalog
 
 ## Stack (already installed and wired — record the values)
-- GitHub repo: [confirm]
-- Vercel project: [confirm]
-- Domain: [confirm]
-- Supabase project: [confirm]
-- Supabase URL: [confirm]
-- Supabase service key: [confirm]
-- Resend account: [confirm]
+- GitHub repo: davidpayroll/crm-demo1
+- Vercel project: apa15/crm-demo1 — live at https://crm-demo1-inky.vercel.app
+- Domain: pending (using the Vercel URL above until a custom domain is added)
+- Supabase project: vlkbednoptunkakaepmu (dedicated to this CRM)
+- Supabase URL: https://vlkbednoptunkakaepmu.supabase.co
+- Supabase service key: stored in .env.local and as a Vercel env var — never in this file
+- Resend account: [confirm] (not needed until Build 2)
 
 ## Build (filled as we go)
 - Plan written: [done]
-- Build 1 (small) status: [pending]
-- Admin account seeded: [pending]
+- Build 1 (small) status: ✅
+- Admin account seeded: ✅ with email david@austpayroll.com.au
 - Build 2 (all) status: [pending]
 - Resend domain verified: [pending]
 
